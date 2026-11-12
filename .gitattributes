@@ -1,0 +1,10 @@
+* text=auto
+*.cmd text eol=crlf
+*.py text eol=lf
+*.lua text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.docx binary
+*.exe binary
+*.rtf binary

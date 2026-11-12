@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markdown 转 Word · 离线工具</title>
+<style>
+:root{font-family:"Segoe UI","Microsoft YaHei",sans-serif;color:#253830;background:#f5f7f5;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;border:1px solid #d8e0db;border-radius:9px;background:#fff;color:#304c3e;padding:11px 18px;font-weight:600;transition:background .15s}button:hover{background:#edf4ef}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #a2cbb4;outline-offset:3px}.primary{background:#28734e;border-color:#28734e;color:white}.primary:hover{background:#205e40}.hidden,[hidden]{display:none!important}.shell{max-width:920px;margin:0 auto;padding:40px 28px 28px}.card{background:#fff;border:1px solid #e1e7e2;border-radius:15px;padding:25px;margin-bottom:16px}.card-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}.step{display:grid;place-items:center;background:#edf3ef;color:#397452;width:28px;height:28px;border-radius:8px;font-size:13px;font-weight:700}h2{font-size:17px;margin:0}.subtle{font-size:12px;color:#87938b;margin-left:auto}.select-box{border:1px dashed #cbd8ce;border-radius:11px;background:#fafcfb;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:18px}.select-title{font-weight:600;font-size:14px}.hint{font-size:12px;color:#7c8b80;line-height:1.6}.file-list{list-style:none;padding:0;margin:15px 0 0;max-height:220px;overflow:auto}.file-list li{display:flex;gap:12px;padding:12px 0;border-top:1px solid #edf1ee;align-items:center}.file-info{flex:1;min-width:0}.remove-file{flex-shrink:0;display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;font-size:24px;font-weight:400;line-height:1;color:#839287;background:transparent}.remove-file:hover{color:#a74632;background:#fff0ed}.file-icon{font-size:11px;font-weight:700;color:#538365;background:#eef4ef;border-radius:6px;padding:10px 7px}.file-name{font-size:13px;font-weight:600;overflow-wrap:anywhere}.file-path{font-size:11px;color:#8d988f;margin-top:4px;overflow-wrap:anywhere}.template-info{min-width:0}.template-path{display:block;overflow-wrap:anywhere;font-size:14px;line-height:1.7;font-weight:700}.select-box button{flex-shrink:0}.path-row{display:flex;gap:10px}input{width:100%;min-width:0;border:1px solid #dce4dd;border-radius:9px;padding:12px;background:#fafcfb;color:#42594b;font-size:13px}.path-row button{flex-shrink:0}.under-input{margin-top:11px}.bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:24px 0}.action-button{width:160px;height:44px;font-size:16px;flex-shrink:0}.note{font-size:12px;color:#809086;line-height:1.8}.install{border-color:#e7dcb8;background:#fffdf6}.install p{font-size:13px;color:#86734a;line-height:1.8;margin:0 0 14px}.install h2{margin-bottom:10px}.message{border-radius:9px;padding:13px 15px;font-size:13px;line-height:1.7;background:#fff0ed;color:#a74632;margin-bottom:16px;white-space:pre-wrap;overflow-wrap:anywhere}.progress-track{height:5px;background:#edf2ee;border-radius:8px;margin:15px 0;overflow:hidden}.progress-fill{height:100%;background:#438764;transition:width .3s}.progress-fill.indeterminate{width:35%!important;animation:slide 1.5s infinite}@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(380%)}}.status-row{display:flex;justify-content:space-between;align-items:center;gap:14px}.status-title{font-weight:600;font-size:15px}.result-list{list-style:none;margin:12px 0;padding:0}.result-list li{padding:11px 0;border-top:1px solid #edf1ee;font-size:13px;line-height:1.7;overflow-wrap:anywhere}.success{color:#28734e}.failure{color:#b1503b}details{margin-top:15px;font-size:12px;color:#78887e}summary{cursor:pointer}pre{max-height:250px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f8f6;border-radius:8px;padding:14px;line-height:1.7;color:#506357;font-family:Consolas,"Microsoft YaHei",monospace}footer{display:flex;justify-content:space-between;align-items:center;margin-top:28px;font-size:11px;color:#93a096}@media(max-width:600px){.shell{padding:24px 16px}.card{padding:19px}.select-box{align-items:flex-start;flex-direction:column;padding:19px}.select-box button{width:100%}.subtle{display:none}.bottom{align-items:stretch;flex-direction:column}.bottom .action-button{width:100%}.path-row{flex-wrap:wrap}.path-row button{width:100%}.status-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<main class="shell">
+ <div id="message" class="message" role="alert" hidden></div>
+ <section id="install-card" class="card install" hidden><h2>首次使用，先准备一下</h2><p id="install-description">正在检查依赖…</p><button id="install" class="primary">安装依赖</button></section>
+ <section class="card"><div class="card-head"><span class="step">01</span><h2>选择 Markdown 文件</h2><span id="file-count" class="subtle"></span></div><div class="select-box"><div><div id="selection-title" class="select-title">选择你要转换的文档</div></div><button id="pick-files">选择文件</button></div><ul id="files" class="file-list"></ul></section>
+ <section class="card"><div class="card-head"><span class="step">02</span><h2>选择 Word 模板</h2></div><div class="select-box"><div class="template-info"><strong id="template-path" class="template-path">正在读取默认模板…</strong></div><button id="pick-template">选择模板</button></div></section>
+ <section class="card"><div class="card-head"><span class="step">03</span><h2>设置输出目录</h2></div><div class="path-row"><input id="output" aria-label="Word 输出目录" placeholder="选择文件夹，或输入完整路径" spellcheck="false"><button id="pick-output">选择目录</button></div></section>
+ <div class="bottom"><div id="ready-note" class="note">正在检查转换环境…</div><button id="convert" class="primary action-button" disabled>开始转换 →</button></div>
+ <section id="job-card" class="card" aria-live="polite" hidden><div class="status-row"><span id="job-title" class="status-title"></span><button id="open-output" hidden>打开输出目录</button></div><div class="progress-track"><div id="progress" class="progress-fill"></div></div><div id="job-summary" class="hint"></div><ul id="results" class="result-list"></ul><details id="log-details"><summary>查看运行日志</summary><pre id="log"></pre></details></section>
+ <footer><span>本机 Pandoc + 内置 Word 模板</span></footer>
+</main>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const token = new URLSearchParams(location.hash.slice(1)).get('token') || sessionStorage.getItem('mdword-token') || '';
+if(token) sessionStorage.setItem('mdword-token',token);
+history.replaceState(null,'',location.pathname);
+let state=null, pending=false, loaded=false, lastFiles='', lastResults='', failures=0;
+function showError(text){$('message').textContent=text;$('message').hidden=!text;}
+async function api(path,data){const response=await fetch(path,{method:data===undefined?'GET':'POST',headers:{'X-Session-Token':token,'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data)});const value=await response.json();if(!response.ok)throw new Error(value.error||'操作失败');return value;}
+function render(next){
+ state=next;const dep=state.dependencies,job=state.job,busy=pending||job.running;
+ $('install-card').hidden=dep.ready;
+ const missing=[];if(!dep.python_ready)missing.push('python-docx');if(!dep.pandoc_ready)missing.push('Pandoc');
+ $('install-description').textContent='缺少 '+missing.join('、')+'。点击安装即可自动准备环境；Pandoc 将从官方 GitHub 下载到 bin 目录。首次安装需要联网，成功后自动隐藏。';
+ $('install').disabled=busy;$('install').textContent=job.running&&job.kind==='install'?'正在安装…':'安装依赖';
+ for(const id of ['pick-files','pick-template','pick-output','output'])$(id).disabled=busy;
+ $('convert').disabled=busy||!dep.ready||!state.files.length||!state.template||!$('output').value.trim();
+ $('convert').textContent=job.running&&job.kind==='convert'?'正在转换…':'开始转换 →';
+ $('template-path').textContent=state.template;
+ $('file-count').textContent=state.files.length?`已选择 ${state.files.length} 个文件`:'';
+ $('selection-title').textContent=state.files.length?'文件已就绪，可重新选择':'选择你要转换的文档';
+ const fileKey=JSON.stringify(state.files);
+ if(lastFiles!==fileKey){
+  lastFiles=fileKey;$('files').replaceChildren();
+  for(const path of state.files){
+   const li=document.createElement('li'),icon=document.createElement('span'),info=document.createElement('div'),name=document.createElement('div'),full=document.createElement('div'),remove=document.createElement('button');
+   const filename=path.split(/[\\/]/).pop();
+   icon.className='file-icon';icon.textContent='MD';info.className='file-info';
+   name.className='file-name';name.textContent=filename;full.className='file-path';full.textContent=path;
+   remove.type='button';remove.className='remove-file';remove.textContent='×';
+   remove.setAttribute('aria-label','移除 '+filename);remove.title='从已选列表移除（不删除源文件）';
+   remove.onclick=()=>act('/api/remove-file',{path});
+   info.append(name,full);li.append(icon,info,remove);$('files').append(li);
+  }
+ }
+ for(const button of $('files').querySelectorAll('.remove-file'))button.disabled=busy;
+ $('ready-note').textContent=!dep.ready?'安装依赖后即可开始转换。':'环境已就绪 · 使用所选模板转换';
+ $('job-card').hidden=!job.kind;
+ if(job.kind){const installing=job.kind==='install';const failed=job.results.filter(x=>!x.success).length;const success=job.results.length-failed;
+ $('job-title').textContent=job.running?(installing?'正在准备转换环境':'正在生成 Word 文档'):job.error?'任务未完成':installing?'依赖已就绪':failed?'转换完成，部分文件失败':'转换完成';
+ $('job-summary').textContent=job.running?(installing?'请稍候，可在日志中查看安装进度。':`已处理 ${job.done} / ${job.total} 个文件`):job.error|| (installing?'现在可以选择文件开始转换。':`成功 ${success} 个，失败 ${failed} 个`);
+ $('progress').classList.toggle('indeterminate',job.running&&installing);$('progress').style.width=(installing?(job.running?35:100):(job.total?job.done/job.total*100:0))+'%';
+ $('open-output').hidden=installing||job.running||!success;$('open-output').disabled=busy;
+ const resultKey=JSON.stringify(job.results);if(lastResults!==resultKey){lastResults=resultKey;$('results').replaceChildren();for(const item of job.results){const li=document.createElement('li'),title=document.createElement('div'),detail=document.createElement('div');title.className=item.success?'success':'failure';title.textContent=(item.success?'✓ ':'✕ ')+item.source.split(/[\\/]/).pop();detail.className='hint';detail.textContent=item.success?item.output:item.error;li.append(title,detail);if(item.warnings?.length){const note=document.createElement('div');note.className='hint';note.textContent=`${item.warnings.length} 条提示，详见运行日志及转换报告`;li.append(note);}$('results').append(li);}}
+ if($('log').textContent!==job.log){$('log').textContent=job.log;$('log').scrollTop=$('log').scrollHeight;}
+ if(job.error)$('log-details').open=true;
+ }
+}
+async function act(path,data={},syncOutput=false){if(pending)return;pending=true;showError('');if(state)render(state);try{const value=await api(path,data);if(syncOutput)$('output').value=value.output_dir;render(value);}catch(error){showError(error.message);}finally{pending=false;if(state)render(state);}}
+$('pick-files').onclick=()=>act('/api/pick-files');
+$('pick-template').onclick=()=>act('/api/pick-template');
+$('pick-output').onclick=()=>act('/api/pick-output',{},true);
+$('install').onclick=()=>act('/api/install');
+$('convert').onclick=()=>act('/api/convert',{output_dir:$('output').value},true);
+$('open-output').onclick=()=>act('/api/open-output');
+$('output').oninput=()=>{if(state)render(state);};
+async function poll(){try{if(!pending){const value=await api('/api/state');if(!loaded){$('output').value=value.output_dir;loaded=true;}render(value);if(failures)showError('');failures=0;}}catch(error){failures++;if(failures>=3||!loaded){showError('无法连接本地工具，请重新双击“启动页面.cmd”。');$('convert').disabled=true;}}finally{setTimeout(poll,800);}}
+poll();
+</script>
+</body>
+</html>

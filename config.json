@@ -1,0 +1,9 @@
+{
+  "output_dir": "",
+  "template": "templates/template_标题不编号-列表第二行顶格.docx",
+  "pandoc": "",
+  "pipeline": "auto",
+  "beautify_tables": false,
+  "syntax_highlighting": false,
+  "table_style": "Table"
+}

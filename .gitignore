@@ -1,0 +1,32 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Personal settings and secrets
+.web-ui-state.json
+.env
+.env.*
+!.env.example
+
+# Large portable binary: distribute separately via GitHub Releases
+/bin/pandoc.exe
+/bin/.pandoc-install-*/
+/dist/
+
+# Generated conversion outputs; keep bundled Word templates
+*.docx
+!templates/*.docx
+*.conversion-report.json
+*.fixed.md
+.mdword-*/
+outputs/
+
+# Editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
